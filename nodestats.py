@@ -22,7 +22,8 @@ _IS_PLATFORM_WINDOWS = platform.system() == 'Windows'
 telemetryClient = TelemetryClient(os.environ['APP_INSIGHT_KEY'])
 telemetryClient.context.application.id = 'AzureBatchInsights'
 telemetryClient.context.application.ver = '1.2.3'
-telemetryClient.context.device.id = "{}.{}".format(os.environ['AZ_BATCH_POOL_ID'], os.environ['AZ_BATCH_NODE_ID'])
+telemetryClient.context.device.role_instance = os.environ['AZ_BATCH_NODE_ID']
+telemetryClient.context.device.role_name = os.environ['AZ_BATCH_POOL_ID']
 
 class NodeStatsUtils:
     @staticmethod
