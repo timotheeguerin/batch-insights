@@ -3,10 +3,10 @@
 # stdlib imports
 import datetime
 import logging
+from datetime import timedelta
 import os
 import subprocess
 import sys
-import timedelta
 import platform
 
 # non-stdlib imports
@@ -281,17 +281,17 @@ class NodeStatsUtils:
         return delta
 
 
-# logger defines
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter(
-    '%(asctime)s.%(msecs)03dZ %(levelname)s %(name)s::%(filename)s::'
-    '%(funcName)s:%(lineno)d %(process)d:%(threadName)s:%(thread)d '
-    '%(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+def setup_logger():
+    # logger defines
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s.%(msecs)03dZ %(levelname)s %(message)s')
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+
+logger = setup_logger()
 
 # global defines
 _DEFAULT_STATS_UPDATE_INTERVAL = 5
@@ -503,10 +503,10 @@ class NodeStatsManager(object):
             ns.sys_net_write_errors
         return stats_dict
 
-    def periodic_sampler(self, schedule_callback=True):
+    def periodic_sampler(self):
         while True:
             self._send_sample()
-            time.sleep(5000)
+            time.sleep(5)
 
     def _send_sample(self):
         # collect stats
@@ -594,8 +594,8 @@ def main():
         except KeyError as ke:
             logger.exception(ke)
             # below is for local testing
-            pool_id = 'pool_id'
-            node_id = 'node_id'
+            pool_id = '_test-pool-1'
+            node_id = '_test-node-1'
 
         # get and set event loop mode
         logger.info('enabling event loop debug mode')
@@ -611,6 +611,7 @@ def main():
     finally:
         if ns is not None:
             ns.unregister(True)
+
 
 if __name__ == '__main__':
     try:
