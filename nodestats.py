@@ -13,11 +13,13 @@ import platform
 import dateutil.tz
 import psutil
 import time
+from applicationinsights import TelemetryClient
 
 
 # global defines
 _IS_PLATFORM_WINDOWS = platform.system() == 'Windows'
 
+telemetryClient = TelemetryClient(os.environ["APP_INSIGHT_KEY"])
 
 class NodeStatsUtils:
     @staticmethod
@@ -290,6 +292,7 @@ def setup_logger():
     formatter = logging.Formatter('%(asctime)s.%(msecs)03dZ %(levelname)s %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
+    return logger
 
 logger = setup_logger()
 
@@ -510,25 +513,20 @@ class NodeStatsManager(object):
 
     def _send_sample(self):
         # collect stats
-        ns = self._sample_stats()
-        if ns is None:
+        stats = self._sample_stats()
+        if stats is None:
             logger.error('could not sample node stats')
-            # delete callback handle
-            try:
-                self.cbhandle = None
-            except KeyError:
-                pass
-            return
+
         # set a default interval
         interval = _DEFAULT_STATS_UPDATE_INTERVAL
-        try:
-            # convert nodestats to props
-            props = self._create_stats_entity(ns)
-            # upload to redis
-            logger.debug('inserting node stats: {}'.format(props))
-            # self.redis.hmset('$node.stats:{}'.format(self.node_id), props)
-        except Exception as exc:
-            logger.exception(exc)
+        # convert nodestats to props
+        props = self._create_stats_entity(stats)
+        # upload to redis
+        logger.debug('inserting node stats: {}'.format(props))
+        telemetryClient.track_metric("Memeory used", stats.sys_mem_total - stats.sys_mem_avail)
+        telemetryClient.track_metric("Memeory remaining", stats.sys_mem_avail)
+        # self.redis.hmset('$node.stats:{}'.format(self.node_id), props)
+        
 
     def register(self):
         logger.debug(
@@ -614,9 +612,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-        # pylint: disable=W0703
-    except Exception as exc:
-        # pylint: enable=W0703
-        logger.exception(exc)
+    main()
