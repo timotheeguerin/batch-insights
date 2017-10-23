@@ -25,8 +25,8 @@ telemetryClient.context.application.ver = '1.2.3'
 telemetryClient.context.device.role_instance = os.environ['AZ_BATCH_NODE_ID']
 telemetryClient.context.device.role_name = os.environ['AZ_BATCH_POOL_ID']
 
-print("Telemetry client", telemetryClient)
-print("Telemetry client", telemetryClient.context.device)
+logger.debug("Telemetry client", telemetryClient)
+logger.debug("Telemetry client", telemetryClient.context.device)
 
 class NodeStatsUtils:
     @staticmethod
