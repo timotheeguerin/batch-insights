@@ -525,6 +525,7 @@ class NodeStatsManager(object):
         logger.debug('inserting node stats: {}'.format(props))
         telemetryClient.track_metric("Memeory used", stats.sys_mem_total - stats.sys_mem_avail)
         telemetryClient.track_metric("Memeory remaining", stats.sys_mem_avail)
+        telemetryClient.flush()
         # self.redis.hmset('$node.stats:{}'.format(self.node_id), props)
         
 
