@@ -10,9 +10,7 @@ import platform
 from collections import namedtuple
 
 # non-stdlib imports
-import dateutil.tz
 import psutil
-import time
 from applicationinsights import TelemetryClient
 
 VERSION = "0.0.1.1"
