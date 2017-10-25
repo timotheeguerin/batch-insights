@@ -128,7 +128,6 @@ class IOThroughputAggregator:
         write_bps = 0
         if self.last_timestamp:
             delta = (now - self.last_timestamp).total_seconds()
-            print("Delta..", delta)
             read_bps = (cur_read - self.last_read) / delta
             write_bps = (cur_write - self.last_write) / delta
 
