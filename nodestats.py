@@ -285,6 +285,7 @@ def main():
     # log basic info
     logger.info("Python interpreter: %s", python_environment())
     logger.info("Operating system: %s", os_environment())
+    logger.info("Cpu count: %s", psutil.cpu_count())
 
     pool_id = os.environ.get('AZ_BATCH_POOL_ID', '_test-pool-1')
     node_id = os.environ.get('AZ_BATCH_NODE_ID', '_test-node-1')
