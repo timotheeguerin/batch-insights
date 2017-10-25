@@ -2,10 +2,9 @@
 
 # stdlib imports
 import logging
-from datetime import timedelta, datetime
+from datetime import datetime
 import os
-import subprocess
-import sys
+import time
 import platform
 from collections import namedtuple
 
