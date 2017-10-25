@@ -16,7 +16,7 @@ import time
 from applicationinsights import TelemetryClient
 
 VERSION = "0.0.1.1"
-
+_DEFAULT_STATS_UPDATE_INTERVAL = 5
 
 def setup_logger():
     # logger defines
@@ -74,18 +74,8 @@ def pretty_nb(num, suffix=''):
     return "%.1f%s%s" % (num, 'Yi', suffix)
 
 
-# global defines
-_DEFAULT_STATS_UPDATE_INTERVAL = 5
-if is_windows():
-    _USER_DISK = 'C:\\'
-else:
-    _USER_DISK = '/mnt/resources'
-    if not os.path.exists(_USER_DISK):
-        _USER_DISK = '/mnt'
-_MEGABYTE = 1048576
 
 NodeIOStats = namedtuple('NodeIOStats', ['read_bps', 'write_bps'])
-
 
 class NodeStats:
     """Persistent Task Stats class"""
@@ -250,8 +240,8 @@ class NodeStatsCollector:
 
         client.track_metric("Cpu usage", avg(stats.cpu_percent),
                             properties=dict(cpu_count=stats.cpu_count, usages=stats.cpu_percent))
-        client.track_metric("Memeory used", stats.mem_used)
-        client.track_metric("Memeory remaining", stats.mem_avail)
+        client.track_metric("Memory used", stats.mem_used)
+        client.track_metric("Memory available", stats.mem_avail)
         client.track_metric("Disk read", stats.disk.read_bps)
         client.track_metric("Disk write", stats.disk.write_bps)
         client.track_metric("Network read", stats.net.read_bps)
