@@ -15,6 +15,7 @@ from applicationinsights import TelemetryClient
 VERSION = "0.0.1.1"
 _DEFAULT_STATS_UPDATE_INTERVAL = 5
 
+
 def setup_logger():
     # logger defines
     logger = logging.getLogger(__name__)
@@ -71,8 +72,8 @@ def pretty_nb(num, suffix=''):
     return "%.1f%s%s" % (num, 'Yi', suffix)
 
 
-
 NodeIOStats = namedtuple('NodeIOStats', ['read_bps', 'write_bps'])
+
 
 class NodeStats:
     """Persistent Task Stats class"""
