@@ -15,7 +15,6 @@ from applicationinsights import TelemetryClient
 VERSION = "0.0.1.1"
 _DEFAULT_STATS_UPDATE_INTERVAL = 5
 
-
 def setup_logger():
     # logger defines
     logger = logging.getLogger(__name__)
@@ -230,9 +229,10 @@ class NodeStatsCollector:
         """
             Retrieve the current stats and send to app insights
         """
+        process = psutil.Process(os.getpid())
 
-        logger.debug("Uploading stats. Mem: %d/%d",
-                     stats.mem_avail, stats.mem_total)
+        logger.debug("Uploading stats. Mem of this script: %d vs total: %d",
+                     process.memory_info().rss, stats.mem_avail)
         client = self.telemetry_client
 
         client.track_metric("Cpu usage", avg(stats.cpu_percent),
