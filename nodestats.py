@@ -159,8 +159,8 @@ class NodeStatsCollector:
             context.application.id = 'AzureBatchInsights'
             context.application.ver = VERSION
             context.device.model = "BatchNode"
-            context.device.role_instance = self.pool_id
-            context.device.role_name = self.node_id
+            context.device.role_name = self.pool_id
+            context.device.role_instance = self.node_id
 
     def init(self):
         """
