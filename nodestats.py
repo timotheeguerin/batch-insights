@@ -154,7 +154,7 @@ class NodeStatsCollector:
 
         if 'APP_INSIGHT_KEY' in os.environ:
             self.telemetry_client = TelemetryClient(
-                os.environ.get('APP_INSIGHT_KEY'))
+                os.environ.get('APP_INSIGHTS_KEY'))
             context = self.telemetry_client.context
             context.application.id = 'AzureBatchInsights'
             context.application.ver = VERSION
