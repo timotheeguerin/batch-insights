@@ -1,4 +1,5 @@
 set -e
+yum install epel-release
 yum -y install gcc python-pip python-wheels python-dev
 
 echo "Python version:"
