@@ -1,8 +1,6 @@
 set -e
-yum -y install gcc 
+yum -y install gcc python-pip python-wheels
 
-curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-python get-pip.py
 echo "Python version:"
 python --version
 echo "Pip version:"
