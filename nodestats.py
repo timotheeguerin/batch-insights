@@ -252,9 +252,9 @@ class NodeStatsCollector:
         logger.info("========================= Stats =========================")
         logger.info("Cpu percent:            %d%% %s",
                     avg(stats.cpu_percent), stats.cpu_percent)
-        logger.info("Memory available:       %sB / %sB",
+        logger.info("Memory used:       %sB / %sB",
                     pretty_nb(stats.mem_used), pretty_nb(stats.mem_total))
-        logger.info("Swap available:         %sB / %sB",
+        logger.info("Swap used:         %sB / %sB",
                     pretty_nb(stats.swap_avail), pretty_nb(stats.swap_total))
         logger.info("Net read:               %sBs",
                     pretty_nb(stats.net.read_bps))
