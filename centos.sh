@@ -1,5 +1,5 @@
 set -e
-yum -y install gcc python-pip python-wheels
+yum -y install gcc python-pip python-wheels python-dev
 
 echo "Python version:"
 python --version
