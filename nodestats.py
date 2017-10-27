@@ -235,8 +235,9 @@ class NodeStatsCollector:
                      process.memory_info().rss, stats.mem_avail)
         client = self.telemetry_client
 
-        client.track_metric("Cpu usage", avg(stats.cpu_percent),
-                            properties=dict(cpu_count=stats.cpu_count, usages=stats.cpu_percent))
+        for cpuN in range(0, stats.cpu_count):
+            client.track_metric("Cpu usage", avg(stats.cpu_percent[cpuN]),properties={"Cpu #":cpuN})
+            
         client.track_metric("Memory used", stats.mem_used)
         client.track_metric("Memory available", stats.mem_avail)
         client.track_metric("Disk read", stats.disk.read_bps)
