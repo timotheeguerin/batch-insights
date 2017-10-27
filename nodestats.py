@@ -15,6 +15,7 @@ from applicationinsights import TelemetryClient
 VERSION = "0.0.1.1"
 _DEFAULT_STATS_UPDATE_INTERVAL = 5
 
+
 def setup_logger():
     # logger defines
     logger = logging.getLogger(__name__)
@@ -152,7 +153,7 @@ class NodeStatsCollector:
         self.disk = IOThroughputAggregator()
         self.network = IOThroughputAggregator()
 
-        if 'APP_INSIGHT_KEY' in os.environ:
+        if 'APP_INSIGHTS_KEY' in os.environ:
             self.telemetry_client = TelemetryClient(
                 os.environ.get('APP_INSIGHTS_KEY'))
             context = self.telemetry_client.context
@@ -235,9 +236,10 @@ class NodeStatsCollector:
                      process.memory_info().rss, stats.mem_avail)
         client = self.telemetry_client
 
-        for cpuN in range(0, stats.cpu_count):
-            client.track_metric("Cpu usage", avg(stats.cpu_percent[cpuN]),properties={"Cpu #":cpuN})
-            
+        for cpu_n in range(0, stats.cpu_count):
+            client.track_metric("Cpu usage", avg(
+                stats.cpu_percent[cpu_n]), properties={"Cpu #": cpu_n})
+
         client.track_metric("Memory used", stats.mem_used)
         client.track_metric("Memory available", stats.mem_avail)
         client.track_metric("Disk read", stats.disk.read_bps)
