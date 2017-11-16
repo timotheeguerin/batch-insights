@@ -7,5 +7,4 @@ Write-Host "Downloading nodestats.py"
 Invoke-WebRequest https://raw.githubusercontent.com/timotheeguerin/batch-insights/master/nodestats.py -OutFile nodestats.py
 Write-Host "Starting background process in $AZ_BATCH_TASK_WORKING_DIR"
 
-Start-Job { python $AZ_BATCH_TASK_WORKING_DIR\nodestats.py *>> $AZ_BATCH_TASK_WORKING_DIR\node-stats.log }
-# Start-Process python -ArgumentList 'nodestats.py' -NoNewWindow  -RedirectStandardOutput '.\node-stats.log' -RedirectStandardError '.\node-stats.err.log'
+Start-Process python -ArgumentList .\nodestats.py -NoNewWindow  -RedirectStandardOutput .\node-stats.log -RedirectStandardError .\node-stats.err.log
