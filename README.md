@@ -7,7 +7,7 @@ Set 2 environment variables in your start task
 ![](docs/images/app-id.png)
 
  * `APP_INSIGHTS_KEY`: This your app insight instrumentation key
- 
+
 ![](docs/images/inst-key.png)
 
 ### Ubuntu
@@ -21,7 +21,12 @@ Add this command in your start task commandLine
 ```bash
 /bin/bash -c 'wget  -O - https://raw.githubusercontent.com/timotheeguerin/batch-insights/master/centos.sh | bash'
 ```
+### Windows
 
+```batch
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/timotheeguerin/batch-insights/master/windows.ps1'))"
+
+```
 ### Generic
 If you already have a version of python installed you just need to download `nodestats.py` and install dependencies
 You can add this to your main script
