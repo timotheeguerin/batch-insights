@@ -4,5 +4,5 @@ Write-Host "Python version:"
 python --version
 pip install psutil python-dateutil applicationinsights
 Write-Host "Downloading nodestats.py"
-Invoke-WebRequest --no-cache https://raw.githubusercontent.com/timotheeguerin/batch-insights/master/nodestats.py -OutFile nodestats.py
+Invoke-WebRequest https://raw.githubusercontent.com/timotheeguerin/batch-insights/master/nodestats.py -OutFile nodestats.py
 start-job { python nodestats.py > node-stats.log 2>&1 }
