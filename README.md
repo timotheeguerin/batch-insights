@@ -1,7 +1,14 @@
 # batch-insights
 
 ## Usage
-Set an environment variable called `APP_INSIGHTS_KEY` in your start task with your app insight instrumentation key
+Set 2 environment variables in your start task
+ * `APP_INSIGHTS_ACCOUNT`: This is your app insight application id
+
+![](docs/images/app-id.png)
+
+ * `APP_INSIGHTS_KEY`: This your app insight instrumentation key
+ 
+![](docs/images/inst-key.png)
 
 ### Ubuntu
 Add this command in your start task commandLine
