@@ -7,6 +7,7 @@ import os
 import time
 import platform
 from collections import namedtuple
+import sys
 
 # non-stdlib imports
 import psutil
@@ -143,7 +144,7 @@ class NodeStatsCollector:
     Node Stats Manager class
     """
 
-    def __init__(self, pool_id, node_id, refresh_interval=_DEFAULT_STATS_UPDATE_INTERVAL):
+    def __init__(self, pool_id, node_id, refresh_interval=_DEFAULT_STATS_UPDATE_INTERVAL, app_insights_key=None):
         self.pool_id = pool_id
         self.node_id = node_id
         self.telemetry_client = None
@@ -153,9 +154,9 @@ class NodeStatsCollector:
         self.disk = IOThroughputAggregator()
         self.network = IOThroughputAggregator()
 
-        if 'APP_INSIGHTS_KEY' in os.environ:
+        if app_insights_key or 'APP_INSIGHTS_KEY' in os.environ:
             self.telemetry_client = TelemetryClient(
-                os.environ.get('APP_INSIGHTS_KEY'))
+                app_insights_key or os.environ.get('APP_INSIGHTS_KEY'))
             context = self.telemetry_client.context
             context.application.id = 'AzureBatchInsights'
             context.application.ver = VERSION
@@ -283,6 +284,7 @@ def main():
     Main entry point for prism
     """
     # log basic info
+    logger.info("Python args: %s", sys.argv)
     logger.info("Python interpreter: %s", python_environment())
     logger.info("Operating system: %s", os_environment())
     logger.info("Cpu count: %s", psutil.cpu_count())
@@ -293,8 +295,12 @@ def main():
     # get and set event loop mode
     logger.info('enabling event loop debug mode')
 
+    app_insights_key = None
+    if len(sys.argv) > 1:
+        app_insights_key = sys.argv[1]
+
     # create node stats manager
-    collector = NodeStatsCollector(pool_id, node_id)
+    collector = NodeStatsCollector(pool_id, node_id, app_insights_key=app_insights_key)
     collector.init()
     collector.run()
 
