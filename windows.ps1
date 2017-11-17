@@ -1,5 +1,5 @@
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-choco install -y python
+choco install -y python --version 3.6.3
 Write-Host "Python version:"
 python --version
 pip install psutil python-dateutil applicationinsights
