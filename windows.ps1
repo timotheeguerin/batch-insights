@@ -1,5 +1,8 @@
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install -y python --version 3.6.3
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+Write-Host "Current path: $env:Path"
+
 Write-Host "Python version:"
 python --version
 pip install psutil python-dateutil applicationinsights
