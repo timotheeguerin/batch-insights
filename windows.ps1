@@ -11,9 +11,8 @@ Write-Host "Starting background process in $env:AZ_BATCH_TASK_WORKING_DIR"
 # start cmd /C "python .\nodestats.py > .\node-stats.log 2>&1"
 
 # python .\nodestats.py *>> .\node-stats.log
-$taskName = "batch-app-insights";
 $action = New-ScheduledTaskAction -WorkingDirectory $env:AZ_BATCH_TASK_WORKING_DIR -Execute 'Powershell.exe' -Argument "python .\nodestats.py > .\node-stats.log 2>&1" ; 
 $principal = New-ScheduledTaskPrincipal -UserID 'NT AUTHORITY\\SYSTEM' -LogonType ServiceAccount -RunLevel Highest ; 
-Register-ScheduledTask -Action $action -Principal $principal -TaskName $taskName -Force ; 
-Start-ScheduledTask -TaskName $taskName; 
-Get-ScheduledTask -TaskName $taskName;
+Register-ScheduledTask -Action $action -Principal $principal -TaskName "batchappinsights" -Force ; 
+Start-ScheduledTask -TaskName "batchappinsights"; 
+Get-ScheduledTask -TaskName "batchappinsights";
