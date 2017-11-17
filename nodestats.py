@@ -296,8 +296,11 @@ def main():
     logger.info('enabling event loop debug mode')
 
     app_insights_key = None
-    if len(sys.argv) > 1:
-        app_insights_key = sys.argv[1]
+    if len(sys.argv) > 2:
+        pool_id = sys.argv[1]
+        node_id = sys.argv[2]
+    if len(sys.argv) > 3:
+        app_insights_key = sys.argv[3]
 
     # create node stats manager
     collector = NodeStatsCollector(pool_id, node_id, app_insights_key=app_insights_key)
