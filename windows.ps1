@@ -10,4 +10,4 @@ Write-Host "Starting background process in $env.AZ_BATCH_TASK_WORKING_DIR"
 # Start-Process python -ArgumentList .\nodestats.py -NoNewWindow  -RedirectStandardOutput .\node-stats.log -RedirectStandardError .\node-stats.err.log
 # start /B
 
-python .\nodestats.py
+python .\nodestats.py *>> .\node-stats.log
